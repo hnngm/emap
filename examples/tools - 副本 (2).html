@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>tools</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+<link href="../libs/ol/ol.css" rel="stylesheet">
+<link href="../css/emap.css" rel="stylesheet">
+<script type="text/javascript" src="../libs/ol/ol.js"></script>
+<script type="text/javascript" src="../src/base.js"></script>
+<style>
+      .tooltip {
+        position: relative;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+        color: white;
+        padding: 4px 8px;
+        opacity: 0.7;
+        white-space: nowrap;
+      }
+      .tooltip-measure {
+        opacity: 1;
+        font-weight: bold;
+      }
+      .tooltip-static {
+        background-color: #ffcc33;
+        color: black;
+        border: 1px solid white;
+      }
+      .tooltip-measure:before,
+      .tooltip-static:before {
+        border-top: 6px solid rgba(0, 0, 0, 0.5);
+        border-right: 6px solid transparent;
+        border-left: 6px solid transparent;
+        content: "";
+        position: absolute;
+        bottom: -6px;
+        margin-left: -7px;
+        left: 50%;
+      }
+      .tooltip-static:before {
+        border-top-color: #ffcc33;
+      }
+    </style>
+</head>
+<body>
+    <div id="emap"></div>
+    <button id="drwaPoint">画点</button>
+    <button id="drawPolyline">画线</button>
+    <button id="drawPolygon">画区域</button>
+    <button id="export">截图</button>
+
+    <form class="form-inline">
+            <label>Geometry type &nbsp;</label>
+              <select id="type">
+                <option value="length">Length</option>
+                <option value="area">Area</option>
+              </select>
+          </form>
+</body>
+</html>
+
+<script type="text/javascript">
+    var options={zoom:10};
+	var emap=new Emap.Map("emap",options);
+
+/*
+var vector = new ol.layer.Vector({
+  source: new ol.source.Vector(),
+  style: new ol.style.Style({
+    fill: new ol.style.Fill({
+      color: 'rgba(255, 255, 255, 0.2)'
+    }),
+    stroke: new ol.style.Stroke({
+      color: '#ffcc33',
+      width: 2
+    }),
+    image: new ol.style.Circle({
+      radius: 7,
+      fill: new ol.style.Fill({
+        color: '#ffcc33'
+      })
+    })
+  })
+});
+emap.addLayer(vector);*/
+
+var sketch;
+var helpTooltipElement;
+var helpTooltip;
+var measureTooltipElement;
+var measureTooltip;
+var continuePolygonMsg = '点击继续画区域';
+var continueLineMsg = '点击继续画线';
+
+var pointerMoveHandler = function(evt) {
+  if (evt.dragging) {
+    return;
+  }
+  var helpMsg = '画数据';
+  var position = evt.coordinate;
+  if (sketch) {
+    var output;
+    var geom = sketch.getGeometry();
+    if (geom instanceof ol.geom.Polygon) {
+      output = formatArea(geom);
+     // helpMsg = continuePolygonMsg;
+      position = geom.getInteriorPoint().getCoordinates();
+    } else if (geom instanceof ol.geom.LineString) {
+      output = formatLength( geom);
+      //helpMsg = continueLineMsg;
+      position = geom.getLastCoordinate();
+    }
+    measureTooltipElement.innerHTML = output;
+    measureTooltip.setPosition(position);
+  }
+
+ // helpTooltipElement.innerHTML = helpMsg;
+  //helpTooltip.setPosition(evt.coordinate);
+};
+
+
+
+emap.on('pointermove', pointerMoveHandler);
+
+var draw; 
+function addInteraction() {
+  var type = "LineString";
+  draw = new ol.interaction.Draw({
+    source: emap.drawVector.getSource(),
+    type: type,
+    style: new ol.style.Style({
+      fill: new ol.style.Fill({
+        color: 'rgba(255, 255, 255, 0.2)'
+      }),
+      stroke: new ol.style.Stroke({
+        color: 'rgba(0, 0, 0, 0.5)',
+        lineDash: [10, 10],
+        width: 2
+      }),
+      image: new ol.style.Circle({
+        radius: 5,
+        stroke: new ol.style.Stroke({
+          color: 'rgba(0, 0, 0, 0.7)'
+        }),
+        fill: new ol.style.Fill({
+          color: 'rgba(255, 255, 255, 0.2)'
+        })
+      })
+    })
+  });
+  emap.addInteraction(draw);
+
+  createMeasureTooltip();
+  createHelpTooltip();
+
+  draw.on('drawstart',
+      function(evt) {
+        sketch = evt.feature;
+      }, this);
+
+  draw.on('drawend',
+      function(evt) {
+        measureTooltipElement.className = 'tooltip tooltip-static';
+        measureTooltip.setOffset([0, -7]);
+        sketch = null;
+        measureTooltipElement = null;
+        createMeasureTooltip();
+      }, this);
+}
+
+
+/**
+ * Creates a new help tooltip
+ */
+function createHelpTooltip() {
+  if (helpTooltipElement) {
+    helpTooltipElement.parentNode.removeChild(helpTooltipElement);
+  }
+  helpTooltipElement = document.createElement('div');
+  helpTooltipElement.className = 'tooltip';
+  helpTooltip = new ol.Overlay({
+    element: helpTooltipElement,
+    offset: [15, 0],
+    positioning: 'center-left'
+  });
+  emap.addOverlay(helpTooltip);
+}
+
+
+/**
+ * Creates a new measure tooltip
+ */
+function createMeasureTooltip() {
+  if (measureTooltipElement) {
+    measureTooltipElement.parentNode.removeChild(measureTooltipElement);
+  }
+  measureTooltipElement = document.createElement('div');
+  measureTooltipElement.className = 'tooltip tooltip-measure';
+  measureTooltip = new ol.Overlay({
+    element: measureTooltipElement,
+    offset: [0, -15],
+    positioning: 'bottom-center'
+  });
+  emap.addOverlay(measureTooltip);
+}
+
+
+/**
+ * format length output
+ * @param {ol.geom.LineString} line
+ * @return {string}
+ */
+var formatLength = function(line) {
+  var length = Math.round(line.getLength() * 100) / 100;
+  var output;
+  if (length > 100) {
+    output = (Math.round(length / 1000 * 100) / 100) +
+        ' ' + 'km';
+  } else {
+    output = (Math.round(length * 100) / 100) +
+        ' ' + 'm';
+  }
+  return output;
+};
+
+
+/**
+ * format length output
+ * @param {ol.geom.Polygon} polygon
+ * @return {string}
+ */
+var formatArea = function(polygon) {
+  var area = polygon.getArea();
+  var output;
+  if (area > 10000) {
+    output = (Math.round(area / 1000000 * 100) / 100) +
+        ' ' + 'km<sup>2</sup>';
+  } else {
+    output = (Math.round(area * 100) / 100) +
+        ' ' + 'm<sup>2</sup>';
+  }
+  return output;
+};
+
+addInteraction();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
