@@ -1,0 +1,10 @@
+ {
+    "--title" : "emap 地图",
+    "--footer": "emap 地图",
+    "--output" : "../apidoc",
+    "--encoding": "gbk",
+    "--": "../src/emap",
+    "--eg-iframe" :"eg-iframe.html",
+    //"--guides":"guides.json",
+    "--categories":"categories.json"
+  }

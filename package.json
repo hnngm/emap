@@ -1,0 +1,17 @@
+{
+    "name": "emap",
+    "version": "1.0.0",
+    "description": "Emap 是基于Open Layers 3框架开发的，能够方便快速创建自己的地图",
+    "homepage": "emap",
+    "author": "hnngm",
+    "devDependencies": {
+      "grunt": "~0.4.1",
+      "grunt-contrib-clean": "latest",
+      "grunt-contrib-jshint": "~0.3.0",
+      "grunt-contrib-copy": "latest",
+      "grunt-contrib-concat": "~0.1.1",
+      "grunt-concat-css": "~0.3.1",
+      "grunt-contrib-uglify": "~0.1.2",
+      "grunt-contrib-cssmin": "~0.5.0"
+    }
+}

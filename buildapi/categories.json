@@ -1,0 +1,20 @@
+ [
+      {
+          "name": "API列表",
+          "groups": [
+              {
+                  "name": "基础类",
+                  "classes": [
+                      "Emap.LngLat",
+                      "Emap.Bounds"
+                  ]
+              },
+              {
+                  "name": "公共类",
+                  "classes": [
+                      "Emap"
+                  ]
+              }
+          ]
+      }
+  ]
