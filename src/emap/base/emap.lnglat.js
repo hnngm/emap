@@ -1,9 +1,9 @@
 /**
-	#Emap.LngLat
+	#EMap.LngLat
 		经纬度坐标，确定地图上的一个点。
-	@class Emap.LngLat
+	@class EMap.LngLat
 	@author hnngm@163.com
-	@extends Emap
+	@extends EMap
 	
  */
 /**
@@ -11,18 +11,18 @@
 	@param {Number} [lng] 经度值
 	@param {Number} [lat] 纬度值
 */
-Emap.LngLat=function(lng,lat){
+EMap.LngLat=function(lng,lat){
 	var lng=lng;
 	var lat=lat;
 
 
-	/*this.coordinate=function(){
-		return Emap.LngLat.transToCoordinate([this.lng,this.lat]);
-	}*/
+	this.coordinate=function(){
+		return EMap.LngLat.transToCoordinate([lng,lat]);
+	}
 
 	/**
 	*@method distance  当前经纬度和传入经纬度之间的地面距离，单位为米
-	*@param {Emap.LngLat} lnglat 传入经纬度
+	*@param {EMap.LngLat} lnglat 传入经纬度
 	*@return {Number} 返回地面距离，单位为米
 	*/
 	this.distance=function(lnglat){
@@ -51,5 +51,33 @@ Emap.LngLat=function(lng,lat){
 		return lng+","+lat;
 	}
 }
+//转换坐标到经纬度
+EMap.LngLat.parseToLngLat=function(coordinate){
+		var lngLats=ol.proj.transform(coordinate,EMap.currentMap.mapOptions.projection,'EPSG:4326');
+		return new EMap.LngLat(lngLats[0],lngLats[1]);
+}
+//转换经纬度到坐标
+EMap.LngLat.transToCoordinate=function (lngLat){
+		return  ol.proj.transform(lngLat,'EPSG:4326',EMap.currentMap.mapOptions.projection);
+}
 
+//批量转换经纬度到坐标
+EMap.LngLat.parseToCoordinates=function(points){
+		var coordinates=[];
+		for(var i=0;i<points.length;i++){
+			var point=points[i];
+			coordinates.push(point.coordinate());
+		}
+		return coordinates;
+}
+
+//批量转换坐标到经纬度
+EMap.LngLat.parseToLngLats=function(coordinates){
+		var lngLatList=[];
+		coordinates.forEach(function(element,index,array){
+			var lngLat=EMap.LngLat.parseToLngLat(element);
+			lngLatList.push(lngLat);
+		},this);
+	   return lngLatList;
+}
 
