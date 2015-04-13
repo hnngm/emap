@@ -1,7 +1,9 @@
 /**
 # 描述
-*这个是Emap的超类
-*@class Emap
+*这个是EMap的超类
+*@class EMap
  @abstract
 */
-var Emap = function() {};
+var EMap = function() {};
+EMap.BaseLayer={};
+EMap.Control={};
