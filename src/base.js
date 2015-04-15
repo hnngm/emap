@@ -21,6 +21,8 @@ var files=[
 	basesrc+"layers/baselayers/tile/emap.baselayer.googletile.js",
 	basesrc+"layers/baselayers/emap.baselayers.manager.js",
 
+	basesrc+"events/emap.eventtype.js",
+
 	basesrc+"emap.map.js",
 
 	basesrc+"base/emap.bounds.js",

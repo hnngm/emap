@@ -58,11 +58,11 @@ EMap.Extent=function(points){
 }
 //转换经纬度
 EMap.Extent.transToLngLats=function(extent){
-		return ol.proj.transformExtent(extent, EMap.currentMap.mapOptions.projection,'EPSG:4326');
+		return ol.proj.transformExtent(extent, EMap.Map.currentMap.mapOptions.projection,'EPSG:4326');
 	}
 //转换坐标
 EMap.Extent.transToCoordinate=function(extent){
-		return ol.proj.transformExtent(extent, 'EPSG:4326',EMap.currentMap.mapOptions.projection);
+		return ol.proj.transformExtent(extent, 'EPSG:4326',EMap.Map.currentMap.mapOptions.projection);
 }
 //判断点是否在当前范围内
 EMap.Extent.containsPoint=function(extent,point){

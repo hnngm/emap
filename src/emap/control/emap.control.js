@@ -6,7 +6,7 @@
  */
 
 EMap.Control.Manager=function(){
-  var emap=EMap.currentMap;
+  var emap=EMap.Map.currentMap;
   var controlOptions=emap.mapOptions.control;
 
 	var controls=[];

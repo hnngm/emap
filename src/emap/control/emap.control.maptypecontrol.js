@@ -12,7 +12,7 @@
 	@param {Number} [lat] 纬度值
 */
 EMap.MapTypeControl = function(mapTypeControlOptions) {
-  var emap=EMap.currentMap;
+  var emap=EMap.Map.currentMap;
 
   var plane = document.createElement('div');
   plane.innerHTML = '平面';

@@ -17,7 +17,7 @@
  *	@param {Number} [ne] 东北角经纬度
 */
 EMap.Map=function(container,mapOptions){
-	EMap.currentMap=this;
+	EMap.Map.currentMap=this;
 	
 	this.container=container;
 	document.getElementById(container).className="emap";
@@ -78,8 +78,17 @@ EMap.Map=function(container,mapOptions){
 			        ol3Logo:"EMAP"
 			}
 	this.olmap_ = new ol.Map(olMapOption);
-   
-
+	
+	//监空地图div大小变化
+	setInterval(function(){
+		var domcontainer= document.getElementById(EMap.Map.currentMap.container);
+		var width=domcontainer.offsetWidth;
+		var height=domcontainer.offsetHeight;
+		var size=map.olmap_.getSize();
+		if(size[0]!=width||size[1]!=height){
+			EMap.Map.currentMap.olmap_.updateSize();
+		}
+	},500);
 }
 
 /** 
@@ -141,4 +150,45 @@ EMap.Map.prototype.refushView=function() {
               //enableRotation:true,
             });
 	this.olmap_.setView(view);
+}
+/** 
+ * 	@method on  监听事件   
+ *	@param {String} [eventName] 事件名称
+ *	@param {Function} [callback] 回调函数
+ *	@param {Object} [context] 上下文环境
+*/
+EMap.Map.prototype.on=function(eventName,callback,context) {
+	var olmapEvent=function(event){
+		var coordinate=event.coordinate;
+		var emapEvent={
+			position:EMap.LngLat.parseToLngLat(coordinate),
+			frameState:event.frameState,
+			originalEvent:event.originalEvent,
+			pixel:{x:event.pixel[0],y:event.pixel[1]},
+			type:eventName
+		};
+		callback(emapEvent);
+	}
+	EMap.Map.EventCache[callback.toString()]=olmapEvent;
+	if(context!=undefined){
+		this.olmap_.on(EMap.EventType[eventName],olmapEvent,context);
+	}
+	this.olmap_.on(EMap.EventType[eventName],olmapEvent);
+}
+
+/** 
+ * 	@method un  取消监听事件   
+ *	@param {String} [eventName] 事件名称
+*/
+EMap.Map.prototype.un=function(eventName,callback,context) {
+	if(context!=undefined){
+		this.olmap_.un(EMap.EventType[eventName],EMap.Map.EventCache[callback.toString()],context);
+	}
+	this.olmap_.un(EMap.EventType[eventName],EMap.Map.EventCache[callback.toString()]);
+	delete EMap.Map.EventCache[callback.toString()];
+}
+
+//地图事件缓存
+EMap.Map.EventCache={
+
 }

@@ -53,12 +53,12 @@ EMap.LngLat=function(lng,lat){
 }
 //转换坐标到经纬度
 EMap.LngLat.parseToLngLat=function(coordinate){
-		var lngLats=ol.proj.transform(coordinate,EMap.currentMap.mapOptions.projection,'EPSG:4326');
+		var lngLats=ol.proj.transform(coordinate,EMap.Map.currentMap.mapOptions.projection,'EPSG:4326');
 		return new EMap.LngLat(lngLats[0],lngLats[1]);
 }
 //转换经纬度到坐标
 EMap.LngLat.transToCoordinate=function (lngLat){
-		return  ol.proj.transform(lngLat,'EPSG:4326',EMap.currentMap.mapOptions.projection);
+		return  ol.proj.transform(lngLat,'EPSG:4326',EMap.Map.currentMap.mapOptions.projection);
 }
 
 //批量转换经纬度到坐标

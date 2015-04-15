@@ -5,7 +5,7 @@
  * @version $Id$
  */
 EMap.BaseLayer.Manager=function(){
-	    var mapOptions=EMap.currentMap.mapOptions;
+	    var mapOptions=EMap.Map.currentMap.mapOptions;
 	    var baseLayers=[];
 	    //创建地图基本图层
 	    if(mapOptions.mapType=="amap"){
