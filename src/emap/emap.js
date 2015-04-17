@@ -7,3 +7,4 @@
 var EMap = function() {};
 EMap.BaseLayer={};
 EMap.Control={};
+EMap.BaseLayer.WMTS={}

@@ -28,8 +28,7 @@ EMap.Map=function(container,mapOptions){
 		zoom:7,
 		baseLayers:[],//底图图层
 		layers:[],//图层
-		mapType:"amapgoogle",//图层类型
-		groupType:"plane",//组类型
+		mapType:"google",//图层类型
 		control:{
 			scaleEnale:true,//比例尺
 			zoomEnable:true,//+-缩放
@@ -37,6 +36,7 @@ EMap.Map=function(container,mapOptions){
 			zoomSliderEnable:true,//地图控制滑块，
 			overview:true,//缩略图
 			mapTypeControl:true,//是否显示地图控制
+			defaultMapTypeControl:"plane",//默认地图控制
 			fullscreen:false//是否显示全屏按钮
 		},
 		projection:"EPSG:4326"//设置投影
@@ -48,16 +48,10 @@ EMap.Map=function(container,mapOptions){
     var baseLayer=null;
 	if(this.mapOptions.baseLayers.length==0){
 		this.mapOptions.baseLayers=this.baseLayersManager_.getBaseLayers();
-		 baseLayer=this.baseLayersManager_.findBaseLayerByMapType(this.mapOptions.groupType);
-	  	 
 	}else{
 		 baseLayer=this.mapOptions.layers[0];
 		 this.layerManager.setBaseLayers(this.mapOptions.layers);
 	}
-
-	  //缩放范围
-	  this.mapOptions.maxZoom=baseLayer.maxZoom;
-	  this.mapOptions.minZoom=baseLayer.minZoom;
 	
 	var controlManager=new EMap.Control.Manager();
 
@@ -79,16 +73,24 @@ EMap.Map=function(container,mapOptions){
 			}
 	this.olmap_ = new ol.Map(olMapOption);
 	
+	//地图容器大小
+	var containerSize=[];
 	//监空地图div大小变化
-	setInterval(function(){
+	window.setInterval(function(){
 		var domcontainer= document.getElementById(EMap.Map.currentMap.container);
 		var width=domcontainer.offsetWidth;
 		var height=domcontainer.offsetHeight;
-		var size=map.olmap_.getSize();
-		if(size[0]!=width||size[1]!=height){
+		console.log(width+":"+height);
+		if(containerSize.length==0){
+			containerSize=[width,height];
+		}else if(containerSize[0]!=width||containerSize[1]!=height){
 			EMap.Map.currentMap.olmap_.updateSize();
+			window.setTimeout(function(){
+				containerSize=EMap.Map.currentMap.olmap_.getSize();
+				console.log(">>>>"+containerSize);
+			},1000);
 		}
-	},500);
+	},2000);
 }
 
 /** 

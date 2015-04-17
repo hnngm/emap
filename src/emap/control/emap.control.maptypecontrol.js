@@ -13,20 +13,34 @@
 */
 EMap.MapTypeControl = function(mapTypeControlOptions) {
   var emap=EMap.Map.currentMap;
+   
+  
+
 
   var plane = document.createElement('div');
   plane.innerHTML = '平面';
-  plane.className="selected";
-
+  
+  var baseLayers=emap.baseLayersManager_.getBaseLayers();
 
   var planeClick = function(e) {
-    var tagLayer=emap.baseLayersManager_.findBaseLayerByMapType("plane");
-    emap.mapOptions.maxZoom=tagLayer.maxZoom;
-    emap.mapOptions.minZoom=tagLayer.minZoom;
+   if(e.target.className=="selected")return false;
+    var planeLayer=null;
+    baseLayers.forEach(function(baseLayer){
+        if(baseLayer.toString().indexOf("Satellite")==-1){
+            baseLayer.setVisible(true);
+        }else if(planeLayer==null){
+          planeLayer=baseLayer;
+          baseLayer.setVisible(false);
+        }else{
+          baseLayer.setVisible(false);
+        }
+    });
+    
+    emap.mapOptions.maxZoom=planeLayer.getMaxZoom();
+    emap.mapOptions.minZoom=planeLayer.getMinZoom();
     emap.refushView();
 
-    emap.baseLayersManager_.setVisibleByMapType("plane",true);
-    emap.baseLayersManager_.setVisibleByMapType("satellite",false);
+    
     mapTypeSelectedClear();
     this.className="selected";
   };
@@ -39,19 +53,52 @@ EMap.MapTypeControl = function(mapTypeControlOptions) {
   satellite.innerHTML = '卫星';
 
   var satelliteClick = function(e) {
-    var tagLayer=emap.baseLayersManager_.findBaseLayerByMapType("satellite");
-    emap.mapOptions.maxZoom=tagLayer.maxZoom;
-    emap.mapOptions.minZoom=tagLayer.minZoom;
+    if(e.target.className=="selected")return false;
+    var satelliteLayer=null;
+    
+    baseLayers.forEach(function(baseLayer){
+        if(baseLayer.toString().indexOf("Plane")==-1){
+            baseLayer.setVisible(true);
+        }else if(satelliteLayer==null){
+          satelliteLayer=baseLayer;
+          baseLayer.setVisible(false);
+        }else{
+          baseLayer.setVisible(false);
+        }
+    });
+    
+    emap.mapOptions.maxZoom=satelliteLayer.getMaxZoom();
+    emap.mapOptions.minZoom=satelliteLayer.getMinZoom();
     emap.refushView();
 
-    emap.baseLayersManager_.setVisibleByMapType("plane",false);
-    emap.baseLayersManager_.setVisibleByMapType("satellite",true);
+   
     mapTypeSelectedClear();
     this.className="selected";
   };
 
   satellite.addEventListener('click', satelliteClick, false);
   satellite.addEventListener('touchstart', satelliteClick, false);
+
+   //设置默认地图控制按钮
+   if(mapTypeControlOptions.defaultMapTypeControl=="plane"){
+       plane.className="selected";
+   }else{
+       satellite.className="selected";
+   }
+   var tempbaseLayer=null;
+   baseLayers.forEach(function(baseLayer){
+      if(baseLayer.toString().toLowerCase().indexOf(mapTypeControlOptions.defaultMapTypeControl)!=-1){
+          baseLayer.setVisible(true);
+          if(tempbaseLayer==null){
+            tempbaseLayer=baseLayer;
+          }
+      }else{
+          baseLayer.setVisible(false);
+      }
+   });
+   emap.mapOptions.maxZoom=tempbaseLayer.getMaxZoom();
+   emap.mapOptions.minZoom=tempbaseLayer.getMinZoom();
+
 
   var emapTools = document.createElement('div');
   emapTools.className = 'emap_tools';

@@ -5,7 +5,7 @@
  * @version $Id$
  */
  var deststatus=false;
-var basesrc="../src/emap/";
+var basesrc="../../src/emap/";
 var files=[
 	basesrc+"emap.js",
 	basesrc+"base/emap.lnglat.js",
@@ -17,8 +17,12 @@ var files=[
 	basesrc+"control/emap.control.js",
 	
 	basesrc+"layers/baselayers/tile/emap.baselayer.tile.js",
-	basesrc+"layers/baselayers/tile/emap.baselayer.amaptile.js",
-	basesrc+"layers/baselayers/tile/emap.baselayer.googletile.js",
+	basesrc+"layers/baselayers/tile/emap.baselayer.emapplanetile.js",
+	basesrc+"layers/baselayers/tile/emap.baselayer.emapsatellitetile.js",
+
+	basesrc+"layers/baselayers/tile/emap.baselayer.wmts.emapplanetile.js",
+	basesrc+"layers/baselayers/tile/emap.baselayer.wmts.emapsatellitetile.js",
+
 	basesrc+"layers/baselayers/emap.baselayers.manager.js",
 
 	basesrc+"events/emap.eventtype.js",

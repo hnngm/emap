@@ -10,34 +10,126 @@ EMap.BaseLayer.Manager=function(){
 	    //创建地图基本图层
 	    if(mapOptions.mapType=="amap"){
 	    		mapOptions.projection="EPSG:3857";
+	    		var planeTileOptions={
+					url:"http://webrd01.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}",
+				}
+	            var amapPlaneTile=new EMap.BaseLayer.PlaneTile(planeTileOptions);
 
-	    		var amapPlaneTile=new EMap.BaseLayer.AmapPlaneTile();
-	    			amapPlaneTile.setBaseLayerName(mapOptions.mapType+".plane");
-	    			amapPlaneTile.setGroupName("plane");
-	    		var amapSatelliteTile= new EMap.BaseLayer.AmapSatelliteTile({visible:false});
-	    			amapSatelliteTile.setBaseLayerName(mapOptions.mapType+".satellite");
-	    			amapSatelliteTile.setGroupName("satellite");
-	    		var amapAddressTile=new EMap.BaseLayer.AmapAddressTile({visible:false});
-	    			amapAddressTile.setGroupName("satellite");
+	    		
+	    		var satelliteTileOptions={
+	    			visible:false,
+					url:"http://webst04.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}",
+				}
+				var amapSatelliteTile= new EMap.BaseLayer.SatelliteTile(satelliteTileOptions);
+	    		
+				var satelliteTileOptions={
+	    			visible:false,
+					url:"http://webst01.is.autonavi.com/appmaptile?style=8&x={x}&y={y}&z={z}",
+				}
+				var amapAddressTile= new EMap.BaseLayer.SatelliteTile(satelliteTileOptions);
+	    		
 	    		baseLayers.push(amapPlaneTile);
 				baseLayers.push(amapSatelliteTile);
 				baseLayers.push(amapAddressTile);
+			  
+			  
+	    			
 	     }
 	     else if(mapOptions.mapType=="amapgoogle"){
 				mapOptions.projection="EPSG:3857";
 				
-	    		var amapPlaneTile=new EMap.BaseLayer.AmapPlaneTile();
-	    			amapPlaneTile.setBaseLayerName(mapOptions.mapType+".plane");
-	    			amapPlaneTile.setGroupName("plane");
-	    		var googleSatelliteTile=new EMap.BaseLayer.GoogleSatelliteTile({visible:false});
-	    			googleSatelliteTile.setBaseLayerName(mapOptions.mapType+".satellite");
-	    			googleSatelliteTile.setGroupName("satellite");
-	    		var googleAddressTile=new EMap.BaseLayer.GoogleAddressTile({visible:false});
-	    			googleAddressTile.setGroupName("satellite");	
+				var planeTileOptions={
+					url:"http://webrd01.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}",
+				}
+	            var amapPlaneTile=new EMap.BaseLayer.PlaneTile(planeTileOptions);
+	    		
+	    		var satelliteTileOptions={
+	    			visible:false,
+					url:"http://www.google.cn/maps/vt?lyrs=s@169&gl=cn&x={x}&y={y}&z={z}",
+				}
+				var googleSatelliteTile= new EMap.BaseLayer.SatelliteTile(satelliteTileOptions);
+	    		
+				var satelliteTileOptions={
+	    			visible:false,
+					url:"http://mt0.google.cn/vt/imgtp=png32&lyrs=h@283000000&hl=zh-CN&gl=CN&src=app&expIds=201527&rlbl=1&x={x}&y={y}&z={z}&s=Galil",
+				}
+				var googleAddressTile= new EMap.BaseLayer.SatelliteTile(satelliteTileOptions);
+
 	    		baseLayers.push(amapPlaneTile);
 				baseLayers.push(googleSatelliteTile);
 				baseLayers.push(googleAddressTile);
-	     	}
+				
+	     }else if(mapOptions.mapType=="google"){
+				mapOptions.projection="EPSG:3857";
+				
+				var planeTileOptions={
+					url:"http://mt{0-3}.google.cn/vt/lyrs=m@142&hl=zh-CN&gl=cn&x={x}&y={y}&z={z}&s=Galil",
+				}
+	            var amapPlaneTile=new EMap.BaseLayer.PlaneTile(planeTileOptions);
+	    		
+	    		var satelliteTileOptions={
+	    			visible:false,
+					url:"http://www.google.cn/maps/vt?lyrs=s@169&gl=cn&x={x}&y={y}&z={z}",
+				}
+				var googleSatelliteTile= new EMap.BaseLayer.SatelliteTile(satelliteTileOptions);
+	    		
+				var satelliteTileOptions={
+	    			visible:false,
+					url:"http://mt0.google.cn/vt/imgtp=png32&lyrs=h@283000000&hl=zh-CN&gl=CN&src=app&expIds=201527&rlbl=1&x={x}&y={y}&z={z}&s=Galil",
+				}
+				var googleAddressTile= new EMap.BaseLayer.SatelliteTile(satelliteTileOptions);
+					
+	    		baseLayers.push(amapPlaneTile);
+				baseLayers.push(googleSatelliteTile);
+				baseLayers.push(googleAddressTile);
+				
+	   }else if(mapOptions.mapType=="tianditu"){
+				mapOptions.projection="EPSG:3857";
+				
+				var tiandituWMTSPlaneWMTSTileOption={
+					projection:mapOptions.projection,
+					url:"http://t0.tianditu.com/vec_w/wmts",
+					layer:"vec",
+					matrixSet: 'w',
+	                format: 'tiles'
+				}
+	            var tiandituPlaneTile=new EMap.BaseLayer.PlaneWMTSTile(tiandituWMTSPlaneWMTSTileOption);
+
+	            var tiandituAddresswPlaneMTSTile={
+					projection:mapOptions.projection,
+					url: 'http://t0.tianditu.com/cva_w/wmts',
+                    layer: 'cva',
+                    matrixSet: 'w',
+                    format: 'tiles'
+				}
+	            var tiandituAddressPlaneWMTSTile=new EMap.BaseLayer.PlaneWMTSTile(tiandituAddresswPlaneMTSTile);
+
+	            var tiandituSatelliteWMTSTileOption={
+					projection:mapOptions.projection,
+					visible:false,
+					url: 'http://t0.tianditu.com/img_w/wmts',
+                    layer: 'img',
+                    matrixSet: 'w',
+                    format: 'tiles'
+				}
+	            var tiandituSatelliteMTSTile=new EMap.BaseLayer.SatelliteWMTSTile(tiandituSatelliteWMTSTileOption);
+
+	            var tiandituAddresswSatelliteMTSTile={
+					projection:mapOptions.projection,
+					visible:false,
+					url: 'http://t0.tianditu.com/cia_w/wmts',
+                    layer: 'cia',
+                    matrixSet: 'w',
+                    format: 'tiles'
+				}
+	            var tiandituAddressSatelliteMTSTile=new EMap.BaseLayer.SatelliteWMTSTile(tiandituAddresswSatelliteMTSTile);
+	    		
+	    		baseLayers.push(tiandituPlaneTile);
+				baseLayers.push(tiandituAddressPlaneWMTSTile);
+				baseLayers.push(tiandituSatelliteMTSTile);
+				baseLayers.push(tiandituAddressSatelliteMTSTile);
+				
+	   }
 	    
 	    //获得基本图层
 	    this.getBaseLayers=function(){

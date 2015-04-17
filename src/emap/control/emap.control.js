@@ -35,8 +35,7 @@ EMap.Control.Manager=function(){
   }
   if(controlOptions.mapTypeControl){
     var mapTypeControlOptions={
-                  //container:emap.container,
-                 // baseLayersManager:emap.baseLayersManager_
+                  defaultMapTypeControl:controlOptions.defaultMapTypeControl
               };
     var mapTypeControl=new EMap.MapTypeControl(mapTypeControlOptions);
     controls.push(mapTypeControl);
