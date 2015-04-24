@@ -19,7 +19,7 @@ EMap.BaseLayer.SatelliteTile=function(satelliteTileOptions){
 		  		 	  });
   if(this.satelliteTileOptions.url!=undefined){
     sourceXYZ.setUrl(this.satelliteTileOptions.url);
-  }else{
+  }else if(this.satelliteTileOptions.urls!=undefined){
     this.satelliteTileOptions.urls.forEach(function(url){
       sourceXYZ.setUrl(url);
     });

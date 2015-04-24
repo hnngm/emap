@@ -28,7 +28,7 @@ EMap.Map=function(container,mapOptions){
 		zoom:7,
 		baseLayers:[],//底图图层
 		layers:[],//图层
-		mapType:"google",//图层类型
+		mapType:"amap",//图层类型
 		control:{
 			scaleEnale:true,//比例尺
 			zoomEnable:true,//+-缩放
@@ -50,9 +50,9 @@ EMap.Map=function(container,mapOptions){
 		this.mapOptions.baseLayers=this.baseLayersManager_.getBaseLayers();
 	}else{
 		 baseLayer=this.mapOptions.layers[0];
-		 this.layerManager.setBaseLayers(this.mapOptions.layers);
+		// this.layerManager.setBaseLayers(this.mapOptions.layers);
 	}
-	
+	this.mapOptions.baseLayers=this.mapOptions.baseLayers.concat(this.mapOptions.layers)
 	var controlManager=new EMap.Control.Manager();
 
 
@@ -80,15 +80,11 @@ EMap.Map=function(container,mapOptions){
 		var domcontainer= document.getElementById(EMap.Map.currentMap.container);
 		var width=domcontainer.offsetWidth;
 		var height=domcontainer.offsetHeight;
-		console.log(width+":"+height);
 		if(containerSize.length==0){
 			containerSize=[width,height];
 		}else if(containerSize[0]!=width||containerSize[1]!=height){
 			EMap.Map.currentMap.olmap_.updateSize();
-			window.setTimeout(function(){
-				containerSize=EMap.Map.currentMap.olmap_.getSize();
-				console.log(">>>>"+containerSize);
-			},1000);
+			containerSize=EMap.Map.currentMap.olmap_.getSize();
 		}
 	},2000);
 }

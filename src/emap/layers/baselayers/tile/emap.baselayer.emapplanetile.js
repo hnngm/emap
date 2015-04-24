@@ -19,7 +19,7 @@ EMap.BaseLayer.PlaneTile=function(planeTileOptions){
 		  		 	  });
   if(this.planeTileOptions.url!=undefined){
     sourceXYZ.setUrl(this.planeTileOptions.url);
-  }else{
+  }else if(this.planeTileOptions.urls!=undefined){
     this.planeTileOptions.urls.forEach(function(url){
       sourceXYZ.setUrl(url);
     });

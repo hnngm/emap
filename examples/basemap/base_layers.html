@@ -16,19 +16,26 @@
 			margin:0;
 			height:100%;
 			width:100%;
-			position:absolute;
+			//position:absolute;
 		}
 		
 	</style>
 
 </head>
 <body>
-   <div id="map" style="display: block;position: relative;overflow: hidden;width:100%;height:100%;margin: 0;
-  padding: 0;"></div>
-    
+  <div style="height:500px;">
+   <div id="map"></div>
+    </div>
 	<script>
-	   var mapOption={
 
+	var layers=new EMap.BaseLayer.PlaneTile();
+	 var source=new ol.source.TileArcGISRest({
+							      url: "http://219.153.71.175:6080/arcgis/rest/services/ditu/MapServer"
+							    });
+		layers.setSource(source);
+
+	   var mapOption={
+	   	//layers:[source]
 	   };
 	   var map=new EMap.Map("map",mapOption);
 	</script>
