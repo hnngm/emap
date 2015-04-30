@@ -20,7 +20,7 @@ EMap.MapTypeControl = function(mapTypeControlOptions) {
   var plane = document.createElement('div');
   plane.innerHTML = '平面';
   
-  var baseLayers=emap.baseLayersManager_.getBaseLayers();
+  var baseLayers=emap.mapOptions.baseLayers;
 
   var planeClick = function(e) {
    if(e.target.className=="selected")return false;

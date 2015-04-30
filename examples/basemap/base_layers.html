@@ -28,14 +28,14 @@
     </div>
 	<script>
 
-	var layers=new EMap.BaseLayer.PlaneTile();
-	 var source=new ol.source.TileArcGISRest({
+	 var layers=new EMap.BaseLayer.PlaneTile();
+	 var source=new EMap.BaseLayer.ArcGISRestSource({
 							      url: "http://219.153.71.175:6080/arcgis/rest/services/ditu/MapServer"
 							    });
 		layers.setSource(source);
 
 	   var mapOption={
-	   	//layers:[source]
+	   	    baseLayers:[layers]
 	   };
 	   var map=new EMap.Map("map",mapOption);
 	</script>

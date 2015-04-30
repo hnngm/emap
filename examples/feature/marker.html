@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>标注点</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+    <link href="../../libs/ol/ol.css" rel="stylesheet">
+	<link href="../../css/emap.css" rel="stylesheet">
+	<script type="text/javascript" src="../../libs/ol/ol.js"></script>
+	<script type="text/javascript" src="../../src/base.js"></script>
+	<style type="text/css">
+		body{
+			margin:0;
+			height:100%;
+			width:100%;
+			//position:absolute;
+		}
+		
+	</style>
+
+</head>
+<body>
+  <div style="height:500px;">
+   <div id="map"></div>
+  </div>
+	<script>
+
+	   var mapOption={
+	   	    
+	   };
+	   var map=new EMap.Map("map",mapOption);
+
+		var defaultPoint=new EMap.LngLat(121.478432,31.219761);
+		var featureMarkerOption={
+			position:defaultPoint,
+			map:map
+		}
+	    var featureVector=new EMap.FeatureMarker(featureMarkerOption);
+	    featureVector.setTitle("test");
+
+	    var defaultPoint1=new EMap.LngLat(121.468432,31.239761);
+		var featureMarkerOption1={
+			position:defaultPoint1,
+			map:map,
+			title:"你好"
+		}
+	    var featureVector1=new EMap.FeatureMarker(featureMarkerOption1);
+	    var click=function(evet){
+	    	//alert(11);
+	    }
+	    featureVector1.on("click",click);
+	    map.on("click",function(event){
+	    		featureVector1.setPosition(event.position);
+	    })
+
+
+		/*map.on('click', function(evt) {
+			  var feature = map.olmap_.forEachFeatureAtPixel([evt.pixel.x,evt.pixel.y],
+			      function(feature, layer) {
+			        return feature;
+			      });
+			  if (feature) {
+			    var geometry = feature.getGeometry();
+			    var coord = geometry.getCoordinates();
+			    
+			    alert(feature.get('name'));
+			  } else {
+			  	//alert('destroy');
+			  }
+		});
+		map.on('move', function(evt) {
+			  if (evt.dragging) {
+			   console.log('destroy');
+			    return;
+			  }
+			  var pixel = map.olmap_.getEventPixel(evt.originalEvent);
+			  var hit = map.olmap_.hasFeatureAtPixel([evt.pixel.x,evt.pixel.y]);
+			  map.olmap_.getTargetElement().style.cursor = hit ? 'pointer' : '';
+		});*/
+	</script>
+</body>
+</html>

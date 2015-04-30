@@ -31,7 +31,7 @@ EMap.BaseLayer.PlaneTile=function(planeTileOptions){
   };
   //调用超类
   ol.layer.Tile.call(this,tileOption);
-
+  
 
   this.setMaxZoom=function(maxZoom){
   	this.planeTileOptions.maxZoom=maxZoom;

@@ -12,18 +12,26 @@ var files=[
 	basesrc+"base/emap.extent.js",
 	basesrc+"base/emap.bounds.js",
 	basesrc+"common/emap.tool.js",
+	basesrc+"common/emap.icon.js",
 
 	basesrc+"control/emap.control.maptypecontrol.js",
 	basesrc+"control/emap.control.js",
-	
+	//底图
+	basesrc+"layers/baselayers/tile/source/emap.baselayer.emaparcgissource.js",
+
 	basesrc+"layers/baselayers/tile/emap.baselayer.tile.js",
 	basesrc+"layers/baselayers/tile/emap.baselayer.emapplanetile.js",
 	basesrc+"layers/baselayers/tile/emap.baselayer.emapsatellitetile.js",
 
 	basesrc+"layers/baselayers/tile/emap.baselayer.wmts.emapplanetile.js",
 	basesrc+"layers/baselayers/tile/emap.baselayer.wmts.emapsatellitetile.js",
-
 	basesrc+"layers/baselayers/emap.baselayers.manager.js",
+	//附加图层
+	basesrc+"layers/feature/emap.layer.vector.js",
+
+	//feature
+	basesrc+"feature/emap.featuremarker.js",
+	
 
 	basesrc+"events/emap.eventtype.js",
 

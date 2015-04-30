@@ -55,7 +55,10 @@ EMap.Map=function(container,mapOptions){
 	this.mapOptions.baseLayers=this.mapOptions.baseLayers.concat(this.mapOptions.layers)
 	var controlManager=new EMap.Control.Manager();
 
+	this.featureVector=new EMap.Layer.FeatureVector();
 
+	var layers=this.mapOptions.baseLayers.concat(this.mapOptions.layers).concat(this.featureVector);
+	
 	var olview=new ol.View({
 	              center:this.mapOptions.center.coordinate(),
 	              zoom: this.mapOptions.zoom,
@@ -66,7 +69,7 @@ EMap.Map=function(container,mapOptions){
 	            });
 	var olMapOption={
 				    target: container,
-			        layers:this.mapOptions.baseLayers,
+			        layers:layers,
 			        controls:controlManager.getControls(),
 			        view:olview,
 			        ol3Logo:"EMAP"
@@ -163,6 +166,7 @@ EMap.Map.prototype.on=function(eventName,callback,context) {
 			frameState:event.frameState,
 			originalEvent:event.originalEvent,
 			pixel:{x:event.pixel[0],y:event.pixel[1]},
+			dragging:event.dragging,
 			type:eventName
 		};
 		callback(emapEvent);
