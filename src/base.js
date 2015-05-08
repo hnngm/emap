@@ -31,6 +31,9 @@ var files=[
 
 	//feature
 	basesrc+"feature/emap.featuremarker.js",
+
+	//overlay
+	basesrc+"overlay/emap.overlay.marker.js",
 	
 
 	basesrc+"events/emap.eventtype.js",

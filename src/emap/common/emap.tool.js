@@ -29,5 +29,18 @@ EMap.Tool={
 	        }
 	    } 
 	    return des;
+	},
+	/**
+	*转换dom
+	*/
+	parseDom:function(html){
+		 var elementTemp = document.createElement("div");
+　　 		elementTemp.innerHTML = html;
+		var childNodes=elementTemp.childNodes;
+		if(childNodes.length==1){
+			return childNodes[0];
+		}else{
+			return childNodes;
+		}
 	}
 }

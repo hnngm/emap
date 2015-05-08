@@ -28,12 +28,22 @@
   </div>
 	<script>
 
+	  var layers=new EMap.BaseLayer.PlaneTile();
+	 var source=new EMap.BaseLayer.ArcGISRestSource({
+							      url: "http://219.153.71.175:6080/arcgis/rest/services/ditu/MapServer"
+							    });
+		layers.setSource(source);
+
+	  var center=new EMap.LngLat(106.52247,29.58812);
+		
 	   var mapOption={
-	   	    
+	   		center:center,
+	   		//projection:"EPSG:4326",
+	   	    baseLayers:[layers]
 	   };
 	   var map=new EMap.Map("map",mapOption);
 
-		var defaultPoint=new EMap.LngLat(121.478432,31.219761);
+		var defaultPoint=new EMap.LngLat(106.479436666667,29.5793216666667);
 		var featureMarkerOption={
 			position:defaultPoint,
 			map:map
@@ -41,21 +51,22 @@
 	    var featureVector=new EMap.FeatureMarker(featureMarkerOption);
 	    featureVector.setTitle("test");
 
-	    var defaultPoint1=new EMap.LngLat(121.468432,31.239761);
+	    /*var defaultPoint1=new EMap.LngLat(106.545120,29.586266);
 		var featureMarkerOption1={
 			position:defaultPoint1,
 			map:map,
-			title:"你好"
+			title:"<div>你好</div>"
 		}
 	    var featureVector1=new EMap.FeatureMarker(featureMarkerOption1);
 	    var click=function(evet){
-	    	//alert(11);
+	    	alert(11);
 	    }
 	    featureVector1.on("click",click);
 	    map.on("click",function(event){
 	    		featureVector1.setPosition(event.position);
-	    })
+	    })*/
 
+	   
 
 		/*map.on('click', function(evt) {
 			  var feature = map.olmap_.forEachFeatureAtPixel([evt.pixel.x,evt.pixel.y],

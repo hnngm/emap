@@ -39,11 +39,12 @@ EMap.FeatureMarker=function(featureMarkerOption){
 		    font: "normal 12px Arial",
 		    text: this.featureMarkerOption.title||"",
 		    fill: new ol.style.Fill({color: "#aa3300"}),
-		    stroke: new ol.style.Stroke({color: "#ffffff", width: 3}),
+		    stroke: new ol.style.Stroke({color: "#4c75a9", width: 9}),
 		    offsetX: 15,
 		    offsetY: -18,
 		    rotation: 0
-		  })
+		  }),
+		  zIndex: 100000
 	});
 
 	feature.setStyle(this.style);
