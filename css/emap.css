@@ -51,15 +51,16 @@
 /*popu window*/
 
 .emap .popup-window{
-		display: none;
-        position: absolute;
-        background-color: white;
+		display: block;
+        position: relative;
+        background-color: #dfe8f6;
         -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.2);
         -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
         filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
         padding: 15px;
         border-radius: 10px;
-        border: 1px solid #cccccc;
+        border: 1px solid #999999;
+        font-size: 8px;
         bottom: 12px;
         left: -50px;
         z-index: 100;
@@ -68,25 +69,22 @@
 }
 
 .emap .popup-window:after, .popup-window:before {
-        top: 100%;
-        border: solid transparent;
-        content: " ";
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
+       content:'';
+              position:absolute;
       }
 .emap .popup-window:after {
-	border-top-color: white;
-	border-width: 10px;
-	left: 48px;
-	margin-left: -10px;
+  border:10px  solid transparent;
+  border-top-color:#dfe8f6;
+  top:100%;
+  left: 48px;
+  margin-left: -10px;
 }
 .emap .popup-window:before {
-	border-top-color: #cccccc;
-	border-width: 11px;
-	left: 48px;
-	margin-left: -11px;
+	 border:11px solid transparent;
+  border-top-color:#999999;
+  top:100%;
+  left: 48px;
+  margin-left: -11px;
 }
 .emap .popup-window .title{
 	font-weight: bold;

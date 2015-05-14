@@ -5,80 +5,74 @@
  * @version $Id$
  */
 
-Emap.PopupWindow=function(popuWindowOption){
+EMap.PopupWindow=function(popuWindowOption){
 	var popuWindow=this;
-	this.options={
+	this.popuWindowOption={
 		title:popuWindowOption.title||"",//标题
 		content:popuWindowOption.content||"",//类容
-		labelTitle:false,//是否显示标题,
-		positioning:"bottom-center",
-		offset:[0,0],
+		positioning:"bottom-left",
+		//offset:[0,0],
 		open:false
 	};
-	this.options=Emap.util.extend(popuWindowOption,this.options);
+	EMap.Tool.extend(this.popuWindowOption,popuWindowOption);
 
-	var boxhtml='<div id="popup-window" class="popup-window">'+
-	              '  <span class="title">'+this.options.title+'</span>'+
+	var boxhtml='<div id="popup-window" class="popup-window" >'+
+	              '  <span class="title">'+this.popuWindowOption.title+'</span>'+
 	              '  <a href="javascript:void(0);"  class="close"></a>'+
-	             '   <div class="content"><p>'+this.options.content+'</p></div>'+
+	             '   <div class="content"><p>'+this.popuWindowOption.content+'</p></div>'+
 	            '</div>';
-	var box=Emap.util.parseToDOM(boxhtml)[0];
+	
+	var boxDom=EMap.Tool.parseDom(boxhtml);
 	//设置默认打开
-	if(this.options.open){
-		box.style.display="block";
+	if(this.popuWindowOption.open){
+		boxDom.style.display="block";
 	}
 	//对话框关闭事件
-	var closeBut=box.getElementsByClassName("close")[0];
+	var closeBut=boxDom.getElementsByClassName("close")[0];
 	closeBut.addEventListener("click", function(){
 				popuWindow.close();
 				return false;
-			}, false);
+	}, false);
 
+	var popupWindow = new ol.Overlay({
+		  position: this.popuWindowOption.position.coordinate(),
+		  positioning: this.popuWindowOption.positioning,
+		  element: boxDom,
+		  stopEvent: false
+		});
 
-	var overlayOption={
-				  position: this.options.position.coordinate(),
-				  positioning: 'center-center',
-				  offset:[box.offsetHeight+this.options.offset[0],this.options.offset[1]],
-				  element: box,
-				  stopEvent: true
-				};
-	//调用超类
-  	ol.Overlay.call(this,overlayOption);
-
-	
-	if(this.options.map!=undefined){
-		this.options.map.addOverlay(this);
+	if(this.popuWindowOption.map!=undefined){
+	    this.popuWindowOption.map.olmap_.addOverlay(popupWindow);
 	}
 
 	//设置经纬度
-	this.setLngLat=function(point){
-		if(point instanceof Array){
-			this.setPosition(point);
-		}else{
-			this.setPosition(point.coordinate());
-		}
+	this.setPosition=function(position){
+			popupWindow.setPosition(position.coordinate());
 	}
 	//设置类容
 	this.setTitle=function(title){
-       var titleEle=box.getElementsByClassName("title")[0];
-       titleEle.innerHTML=title;
+       var titleEle=boxDom.getElementsByClassName("title")[0];
+       titleEle.innerText=title;
 	}
 	//设置类容
 	this.setContent=function(content){
-       var contentEle=box.getElementsByClassName("content")[0];
-       var p=contentEle.getElementsByTagName("p")[0];
-       content=Emap.util.parseToDOM(content)[0];
-       Emap.util.removeAllChild(p);
-       p.appendChild(content);
+		var contentTemp=EMap.Tool.parseDom(content);
+
+       var contentEle=boxDom.getElementsByTagName("p")[0];
+       if(contentTemp instanceof HTMLElement){
+			contentEle.innerHTML=content;
+       }else{
+			contentEle.innerText=content;
+       }
+       
 	}
 	//显示
-	this.show=function(){
-		box.style.display="block";
+	this.open=function(){
+		boxDom.style.display="block";
 	}
 	//关闭
 	this.close=function(){
-		box.style.display="none";
+		boxDom.style.display="none";
 	}
-
 }
-ol.inherits(Emap.PopupWindow, ol.Overlay);
+

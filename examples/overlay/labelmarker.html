@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>标注点</title>
+<title>label marker</title>
 <meta name="description" content="">
 <meta name="keywords" content="">
 <link href="" rel="stylesheet">
@@ -37,21 +37,16 @@
 	  var center=new EMap.LngLat(106.48334741333001,29.576676187942077);
 		
 	   var mapOption={
-	   		center:center,
-	   		//mapType:'amap',
-	   		//projection:"EPSG:4326",
-	   	    //baseLayers:[layers]
+	   		center:center
 	   };
 	   var map=new EMap.Map("map",mapOption);
 
 	   var markerOption={
 	   		position:center,
 	   		label:'通过执行结果与FireBug解析结果来看，虽然我们给图片宽高定义了auto，但style标签的!important权重覆盖了auto值，所以结果自然都是一样的',
-	   		mouseOverLabelShow:true,
-	   		showLabel:true,
 	   		map:map
 	   };
-	   var marker=new EMap.Marker(markerOption);
+	   var marker=new EMap.LabelMarker(markerOption);
 	   var click=function(event){
 	   		console.log(event);
 	   };

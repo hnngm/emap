@@ -11,45 +11,57 @@
  * @date    2014-12-23 10:04:11
  * @version $Id$
  */
-Emap.LabelMarker= function(markerOption) {
-	this.options={
-		title:markerOption.title||"",//标题
-		positioning:"bottom-center"
+EMap.LabelMarker= function(labelMarkerOption) {
+	this.labelMarkerOption={
+		positioning:"bottom-center",
 	};
-	this.options=Emap.util.extend(markerOption,this.options);
+	EMap.Tool.extend(this.labelMarkerOption,labelMarkerOption);
+	var emapLabelMarker=this;
+
+	var markerHtml='<div style="position: relative; cursor: pointer; z-index: 500;background-color: #dfe8f6;border: 1px solid #999999;max-width: 200px;min-width: 200px;font-size: 8px;padding: 2px 7px 2px 7px;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;">'+
+						labelMarkerOption.label+'</div>';
+	var markerDom=EMap.Tool.parseDom(markerHtml)
+
+	var marker = new ol.Overlay({
+		  position: this.labelMarkerOption.position.coordinate(),
+		  positioning: this.labelMarkerOption.positioning,
+		  element: markerDom,
+		  stopEvent: false
+		});
+	if(this.labelMarkerOption.map!=undefined){
+	    this.labelMarkerOption.map.olmap_.addOverlay(marker);
+	}
+
 	
-
-	var element=Emap.util.parseToDOM(this.options.title)[0];
-	element.className="emap_label_marker";
-	var overlayOption={
-			  position: this.options.position.coordinate(),
-			  positioning: this.options.positioning,
-			  element: element,
-			  stopEvent: false
-			};
-
-  //调用超类
-  ol.Overlay.call(this,overlayOption);
-
-  if(this.options.map!=undefined){
-		this.options.map.addOverlay(this);
+	//设置文字
+	this.setLabel=function(label){
+			this.markerOption.label=label;
+			var tooltipDom=	tooltip.getElement();
+			tooltipDom.innerText=label;
 	}
-  //设置地图
-	this.setMap=function(map){
-		map.addOverlay(this);
+	//设置位置
+	this.setPosition=function(postion){
+			marker.setPosition(postion.coordinate());
+			tooltip.setPosition(postion.coordinate());
 	}
-	//删除marker
+	//设置位置
+	this.getPosition=function(){
+			var postion=marker.getPosition();
+			return EMap.LngLat.parseToLngLat(postion);
+	}
+	//删除
 	this.remove=function(){
-		Emap.currentMap.removeOverlay(this);
+		this.markerOption.map.olmap_.removeOverlay(marker);
+		this.markerOption.map.olmap_.removeOverlay(tooltip);
 	}
-	//设置经纬度
-	this.setPosition=function(point){
-       this.setPosition(point.coordinate);
+	//绑定事件
+	this.on=function(eventName,callback){
+		var markerDom=marker.getElement();
+		markerDom.addEventListener(eventName, callback, false);
 	}
-	//设置标题
-	this.setTitle=function(title){
-		this.setElement(title);
+	this.un=function(eventName,callback){
+		var markerDom=marker.getElement();
+		markerDom.removeEventListener(eventName, callback, false);
 	}
 	
 };
-ol.inherits(Emap.LabelMarker, ol.Overlay);

@@ -95,39 +95,11 @@ EMap.Marker= function(markerOption) {
 	//绑定事件
 	this.on=function(eventName,callback){
 		var markerDom=marker.getElement();
-		var eventCallback=function(event){
-			var coordinate=event.coordinate;
-			var emapMarkerEvent={
-				position:EMap.LngLat.parseToLngLat(marker.getPosition()),
-				pixel:{x:event.x,y:event.y},
-				type:eventName,
-				data:markerOption.data||null
-			};
-			callback(emapMarkerEvent);
-		}
-		EMap.Marker.EventCache[callback.toString()]=eventCallback;
-		markerDom.addEventListener(eventName, eventCallback, false);
+		markerDom.addEventListener(eventName, callback, false);
 	}
 	this.un=function(eventName,callback){
 		var markerDom=marker.getElement();
-		var eventCallback=function(event){
-			var coordinate=event.coordinate;
-			var emapMarkerEvent={
-				position:EMap.LngLat.parseToLngLat(marker.getPosition()),
-				pixel:{x:event.x,y:event.y},
-				type:eventName,
-				data:markerOption.data||null
-			};
-			callback(emapMarkerEvent);
-		}
-		markerDom.removeEventListener(eventName, EMap.EventType[callback.toString()], false);
-		delete EMap.Map.EventCache[callback.toString()];
+		markerDom.removeEventListener(eventName, callback, false);
 	}
 	
 };
-
-
-//marker事件缓存
-EMap.Marker.EventCache={
-
-}

@@ -34,6 +34,8 @@ var files=[
 
 	//overlay
 	basesrc+"overlay/emap.overlay.marker.js",
+	basesrc+"overlay/emap.overlay.labelmarker.js",
+	basesrc+"overlay/emap.overlay.popuwindow.js",
 	
 
 	basesrc+"events/emap.eventtype.js",
