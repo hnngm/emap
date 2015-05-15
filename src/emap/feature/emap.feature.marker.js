@@ -21,7 +21,7 @@ EMap.FeatureMarker=function(featureMarkerOption){
 		});
 	
 	if(this.featureMarkerOption.map!=undefined){
-		map.featureVector.getSource().addFeature(feature);
+		this.featureMarkerOption.map.featureVector.getSource().addFeature(feature);
 	}
 	
 

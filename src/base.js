@@ -30,7 +30,8 @@ var files=[
 	basesrc+"layers/feature/emap.layer.vector.js",
 
 	//feature
-	basesrc+"feature/emap.featuremarker.js",
+	basesrc+"feature/emap.feature.marker.js",
+	basesrc+"feature/emap.feature.polyline.js",
 
 	//overlay
 	basesrc+"overlay/emap.overlay.marker.js",
