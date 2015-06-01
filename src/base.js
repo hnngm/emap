@@ -32,6 +32,14 @@ var files=[
 	//feature
 	basesrc+"feature/emap.feature.marker.js",
 	basesrc+"feature/emap.feature.polyline.js",
+	basesrc+"feature/emap.feature.polygon.js",
+
+	//drawture
+
+	basesrc+"feature/draw/emap.feature.drawpolyline.js",
+	basesrc+"feature/draw/emap.feature.drawpolygon.js",
+	basesrc+"feature/draw/emap.feature.drawrect.js",
+	basesrc+"feature/draw/emap.feature.drawcircle.js",
 
 	//overlay
 	basesrc+"overlay/emap.overlay.marker.js",

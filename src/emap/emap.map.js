@@ -56,8 +56,11 @@ EMap.Map=function(container,mapOptions){
 	var controlManager=new EMap.Control.Manager();
 
 	this.featureVector=new EMap.Layer.FeatureVector();
+	this.drawVector=new EMap.Layer.FeatureVector();
 
-	var layers=this.mapOptions.baseLayers.concat(this.mapOptions.layers).concat(this.featureVector);
+	var layers=this.mapOptions.baseLayers.concat(this.mapOptions.layers)
+				.concat(this.featureVector)
+				.concat(this.drawVector);
 	
 	var olview=new ol.View({
 	              center:this.mapOptions.center.coordinate(),

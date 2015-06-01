@@ -59,6 +59,11 @@ EMap.Polyline=function(polylineOptions){
 		source=map.drawVector.getSource();
         source.addFeature(this);
 	}
+	//设置标题
+	this.setTitle=function(title){
+		var textStyle=styleOption.style.getText();
+		textStyle.setText(title);
+	}
 	//设置路径
 	this.setPath=function(path){
 		if(lineString==null){

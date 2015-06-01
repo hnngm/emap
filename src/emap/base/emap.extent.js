@@ -13,8 +13,8 @@ EMap.Extent=function(points){
 	var temp=[];
 	for(var i=0;i<points.length;i++){
 		var point=points[i];
-		temp.push(point.lng);
-		temp.push(point.lat);
+		temp.push(point.getLng());
+		temp.push(point.getLat());
 	}
 	this.getCoordinates=function(){
 		return EMap.Extent.transToCoordinate(temp);
@@ -33,23 +33,23 @@ EMap.Extent=function(points){
 	}
 	//获得中心点
 	this.getCenter=function(){
-		return EMap.point.parseToLngLat(ol.extent.getCenter(this.getCoordinates()));
+		return EMap.LngLat.parseToLngLat(ol.extent.getCenter(this.getCoordinates()));
 	}
 	//获得左下点
 	this.getBottomLeft=function(){
-		return EMap.point.parseToLngLat(ol.extent.getBottomLeft(this.getCoordinates()));
+		return EMap.LngLat.parseToLngLat(ol.extent.getBottomLeft(this.getCoordinates()));
 	}
 	//获得右下点
 	this.getBottomLeft=function(){
-		return EMap.point.parseToLngLat(ol.extent.getBottomLeft(this.getCoordinates()));
+		return EMap.LngLat.parseToLngLat(ol.extent.getBottomLeft(this.getCoordinates()));
 	}
 	//获得左上点
 	this.getTopLeft=function(){
-		return EMap.point.parseToLngLat(ol.extent.getTopLeft(this.getCoordinates()));
+		return EMap.LngLat.parseToLngLat(ol.extent.getTopLeft(this.getCoordinates()));
 	}
 	//获得右上点
 	this.getTopRight=function(){
-		return EMap.point.parseToLngLat(ol.extent.getTopRight(this.getCoordinates()));
+		return EMap.LngLat.parseToLngLat(ol.extent.getTopRight(this.getCoordinates()));
 	}
 	//两个范围相交
 	this.intersects=function(extent){
@@ -67,4 +67,8 @@ EMap.Extent.transToCoordinate=function(extent){
 //判断点是否在当前范围内
 EMap.Extent.containsPoint=function(extent,point){
 		return ol.extent.containsCoordinate(extent.coordinate(), point.coordinate());
+}
+//获得中心点
+EMap.Extent.getCenterToCoordinate=function(coordinates){
+		return ol.extent.getCenter(coordinates);
 }
