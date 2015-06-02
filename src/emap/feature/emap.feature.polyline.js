@@ -57,7 +57,7 @@ EMap.Polyline=function(polylineOptions){
 	//设置地图
 	this.setMap=function(map){
 		source=map.drawVector.getSource();
-        source.addFeature(this);
+        source.addFeature(feature);
 	}
 	//设置标题
 	this.setTitle=function(title){

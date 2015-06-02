@@ -33,6 +33,7 @@ var files=[
 	basesrc+"feature/emap.feature.marker.js",
 	basesrc+"feature/emap.feature.polyline.js",
 	basesrc+"feature/emap.feature.polygon.js",
+	basesrc+"feature/emap.feature.circle.js",
 
 	//drawture
 
