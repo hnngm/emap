@@ -43,10 +43,11 @@ EMap.Map=function(container,mapOptions){
 	};
 	this.mapOptions=EMap.Tool.extend(mapOptions,this.mapOptions);
 
-	//基本图层管理
-	this.baseLayersManager_=new EMap.BaseLayer.Manager();
+	
     var baseLayer=null;
 	if(this.mapOptions.baseLayers.length==0){
+		//基本图层管理
+		this.baseLayersManager_=new EMap.BaseLayer.Manager();
 		this.mapOptions.baseLayers=this.baseLayersManager_.getBaseLayers();
 	}else{
 		 baseLayer=this.mapOptions.layers[0];
