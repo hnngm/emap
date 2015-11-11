@@ -9,28 +9,48 @@
   //配置参数
   grunt.initConfig({
      pkg: grunt.file.readJSON('package.json'),
-     srcfiles:['src/emap/common/emap.namespace.js',
-                    'src/emap/common/emap.utils.js',
-                    'src/emap/common/emap.icon.js',
-                    'src/emap/common/emap.draw.js',
-                    'src/emap/base/emap.base.lnglat.js',
-                    'src/emap/base/emap.bounds.js',
+     srcfiles:[
+                    'src/emap/emap.js',
+
+                    'src/emap/base/emap.lnglat.js',
                     'src/emap/base/emap.extent.js',
-                    'src/emap/control/emap.controller.js',
-                    'src/emap/layers/vector/emap.layer.drawvector.js',
-                    'src/emap/layers/tile/emap.layer.tile.js',
-                    'src/emap/layers/tile/emap.layer.googletile.js',
-                    'src/emap/layers/tile/emap.layer.amaptile.js',
-                    'src/emap/layers/emap.layermanager.js',
-                    'src/emap/feature/emap.feature.polygon.js',
+                    'src/emap/base/emap.bounds.js',
+
+                    'src/emap/common/emap.tool.js',
+                    'src/emap/common/emap.icon.js',
+
+                    'src/emap/control/emap.control.maptypecontrol.js',
+                    'src/emap/control/emap.control.js',
+
+                    'src/emap/layers/baselayers/tile/source/emap.baselayer.emaparcgissource.js',
+                    'src/emap/layers/baselayers/tile/emap.baselayer.tile.js',
+                    'src/emap/layers/baselayers/tile/emap.baselayer.emapplanetile.js',
+                    'src/emap/layers/baselayers/tile/emap.baselayer.emapsatellitetile.js',
+
+                    'src/emap/layers/baselayers/tile/emap.baselayer.wmts.emapplanetile.js',
+                    'src/emap/layers/baselayers/tile/emap.baselayer.wmts.emapsatellitetile.js',
+                    'src/emap/layers/baselayers/emap.baselayers.manager.js',
+
+                    'src/emap/layers/feature/emap.layer.vector.js',
+
+                    'src/emap/feature/emap.feature.marker.js',
                     'src/emap/feature/emap.feature.polyline.js',
-                    'src/emap/feature/draw/emap.feature.drawbox.js',
-                    'src/emap/feature/draw/emap.feature.drawpolygon.js',
+                    'src/emap/feature/emap.feature.polygon.js',
+                    'src/emap/feature/emap.feature.circle.js',
+
                     'src/emap/feature/draw/emap.feature.drawpolyline.js',
-                    'src/emap/overlay/emap.overlay.labelmarker.js',
+                    'src/emap/feature/draw/emap.feature.drawpolygon.js',
+                    'src/emap/feature/draw/emap.feature.drawrect.js',
+                    'src/emap/feature/draw/emap.feature.drawcircle.js',
+
                     'src/emap/overlay/emap.overlay.marker.js',
+                    'src/emap/overlay/emap.overlay.labelmarker.js',
                     'src/emap/overlay/emap.overlay.popuwindow.js',
-                    'src/emap/emap.js'],
+
+                    'src/emap/events/emap.eventtype.js',
+                    'src/emap/emap.map.js',
+                    'src/emap/base/emap.bounds.js'
+              ],
       clean: {//清除目录
         all: ['dest/**']
       },
@@ -52,8 +72,7 @@
          }
      },
      concat_css: {//合并css
-	    options: {
-	    },
+	    options: {},
 	    all: {
 	      src: ["css/*.css"],
 	      dest: "dest/<%= pkg.name %>.css"
@@ -83,7 +102,6 @@
     jshint: {//js检查
       files: ['Gruntfile.js', 'src/**/*.js'],
       options: {
-        // options here to override JSHint defaults
         globals: {
           jQuery: true,
           console: true,
@@ -92,7 +110,6 @@
         }
       }
     }
-	}
   });
  
   //载入concat和uglify插件，分别对于合并和压缩
