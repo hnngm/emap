@@ -34,7 +34,7 @@ EMap.Map=function(container,mapOptions){
 			zoomEnable:true,//+-缩放
 			zoomToExtentEnable:false,//缩放固定区域
 			zoomSliderEnable:true,//地图控制滑块，
-			overview:true,//缩略图
+			overview:false,//缩略图
 			mapTypeControl:true,//是否显示地图控制
 			defaultMapTypeControl:"plane",//默认地图控制
 			fullscreen:false//是否显示全屏按钮

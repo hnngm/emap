@@ -17,7 +17,7 @@ EMap.MapTypeControl = function(mapTypeControlOptions) {
   
 
 
-  var plane = document.createElement('div');
+  var plane = document.createElement('button');
   plane.innerHTML = '平面';
   
   var baseLayers=emap.mapOptions.baseLayers;
@@ -49,7 +49,7 @@ EMap.MapTypeControl = function(mapTypeControlOptions) {
   plane.addEventListener('touchstart', planeClick, false);
 
 
-  var satellite=document.createElement('div');
+  var satellite=document.createElement('button');
   satellite.innerHTML = '卫星';
 
   var satelliteClick = function(e) {
@@ -101,7 +101,7 @@ EMap.MapTypeControl = function(mapTypeControlOptions) {
 
 
   var emapTools = document.createElement('div');
-  emapTools.className = 'emap_tools';
+  emapTools.className = 'emap_tools ol-control';
   emapTools.appendChild(plane);
   emapTools.appendChild(satellite);
 
