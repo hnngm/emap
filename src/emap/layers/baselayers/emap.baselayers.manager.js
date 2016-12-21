@@ -51,7 +51,7 @@ EMap.BaseLayer.Manager=function(){
 	    		
 				var satelliteTileOptions={
 	    			visible:false,
-					url:"http://mt0.google.cn/vt/imgtp=png32&lyrs=h@283000000&hl=zh-CN&gl=CN&src=app&expIds=201527&rlbl=1&x={x}&y={y}&z={z}&s=Galil",
+					url:"http://mt1.google.cn/maps/vt?lyrs=s@192&hl=zh&gl=CN&x={x}&y={y}&z={z}&token=86094",
 				}
 				var googleAddressTile= new EMap.BaseLayer.SatelliteTile(satelliteTileOptions);
 
@@ -75,7 +75,7 @@ EMap.BaseLayer.Manager=function(){
 	    		
 				var satelliteTileOptions={
 	    			visible:false,
-					url:"http://mt0.google.cn/vt/imgtp=png32&lyrs=h@283000000&hl=zh-CN&gl=CN&src=app&expIds=201527&rlbl=1&x={x}&y={y}&z={z}&s=Galil",
+					url:"http://mt1.google.cn/maps/vt?lyrs=s@192&hl=zh&gl=CN&x={x}&y={y}&z={z}&token=86094",
 				}
 				var googleAddressTile= new EMap.BaseLayer.SatelliteTile(satelliteTileOptions);
 					

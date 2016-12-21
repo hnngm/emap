@@ -4,7 +4,7 @@
  * @date    2015-01-21 16:27:00
  * @version $Id$
  */
- var deststatus=true;
+ var deststatus=false;
 var basesrc="../../src/emap/";
 var files=[
 	basesrc+"emap.js",
